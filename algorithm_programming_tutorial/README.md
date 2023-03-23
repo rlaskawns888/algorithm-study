@@ -6,3 +6,7 @@ https://www.youtube.com/watch?v=qQ5iLNjpxSk&list=PLRx0vPvlEmdDHxCvAQS1_6XV4deOwf
 
 알고리즘의 개요 및 실습 환경 설치하기
 https://blog.naver.com/ndb796/221226794899
+
+
+3
+https://blog.naver.com/ndb796/221226806398

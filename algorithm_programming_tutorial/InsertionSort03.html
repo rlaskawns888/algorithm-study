@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // https://blog.naver.com/ndb796/221226806398
+
+        //삽입정렬
+        //각 숫자를 적절한 위치에 삽입하면 어떨까?
+        const arr = [1, 10, 5, 8, 7, 6, 4, 3, 2, 9];
+        const len = arr.length;
+
+        for(let i=0; i<len; i++) {
+            let j = i;
+            let temp; 
+
+            while(j >= 0 && arr[j] > arr[j + 1]) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                j--;
+            }
+        }
+        console.log(arr);
+    </script>
+</body>
+</html>

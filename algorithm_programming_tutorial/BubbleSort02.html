@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            https://blog.naver.com/ndb796/221226803544
+
+            버블 정렬(Bubble Sort)
+
+            "옆에 있는 값과 비교해서 더 작은 값을 앞으로 보내면 어떨까?"
+            - 가장 큰 값이 맨 뒤로 보내지는 정렬
+        
+        */
+
+        const arr = [1, 10, 5, 8, 7, 6, 4, 3, 2, 9];
+        const len = arr.length;
+
+        for(let i=0; i<len; i++) {
+            let temp;
+            for(let j= 0; j<(len - 1) - i; j++) {
+                if(arr[j] > arr[j + 1]) {
+                    temp = arr[j + 1];
+                    arr[j + 1] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        console.log(arr);
+
+
+        function bubbleSort() {
+            const arr = [1, 10, 5, 8, 7, 6, 4, 3, 2, 9];
+            const len = arr.length;
+
+            for (let i = 0; i < len; i++) {
+                let swapped = false;
+                let lastSwapIndex = len - 1;
+
+                for (let j = 0; j < lastSwapIndex; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                    swapped = true;
+                    lastSwapIndex = j;
+                }
+                }
+
+                // 배열이 이미 정렬된 경우, 순회를 중지합니다.
+                if (!swapped) {
+                   break;
+                }
+            }
+
+            console.log(arr);
+        }
+    </script>
+</body>
+</html>

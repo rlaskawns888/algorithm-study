@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //세 숫자 정렬 
+        // https://www.acmicpc.net/problem/2752
+
+        //단순 정렬
+        //https://www.acmicpc.net/problem/2750
+
+        //100만개 정렬
+        //https://www.acmicpc.net/problem/2751
+
+        //Insertion Sort 
+        //각 숫자를 적절한 위치에 삽입하면 어떨까?
+
+        const arr= randomReturnArr();
+        console.log('arr: ', arr);
+
+        function insertionSort(arr) {
+            const len = arr.length;
+
+            for(let i=0; i<len; i++) {
+                let temp;
+
+                for(let j=i + 1; j<len; j++) {
+                    if(arr[i] > arr[j]) {
+                        temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                    }
+                }
+            }
+
+            return arr;
+        }
+        console.log('Insertion Sort: ', insertionSort(arr));
+
+        //Bubble Sort
+        //"옆에 있는 값과 비교해서 더 작은 값을 앞으로 보내면 어떨까?"
+           // - 가장 큰 값이 맨 뒤로 보내지는 정렬
+        function bubbleSort(arr) {
+            const len = arr.length;
+
+            for(let i=0; i<len; i++) {
+                let temp;
+                for(let j=0; j < (len - 1) - i; j++) {
+                    if(arr[j] > arr[j + 1]) {
+                        temp = arr[j + 1];
+                        arr[j + 1] = arr[j];
+                        arr[j] = temp;
+                    }
+                }
+            }
+
+            return arr;
+        }
+        console.log('Bubble Sort: ', bubbleSort(arr));
+
+
+        //Quick Sort
+        function quickSort(arr) {
+            if(arr.length <= 1) {
+                return arr;
+            }
+
+            const pivot = arr[0];
+            const left = [];
+            const right = [];
+
+            for(let i=1; i<arr.length; i++) {
+                if(pivot > arr[i]) {
+                    left.push(arr[i]);
+                } else {
+                    right.push(arr[i]);
+                }
+            }
+
+            return [...quickSort(left), pivot, ...quickSort(right)];
+        }
+
+        console.log('Quick Sort: ', quickSort(arr));
+        
+
+        //Random Array
+        function randomReturnArr() {
+            const array = [];
+
+            for (let i = 0; i < 1000; i++) {
+                array.push(Math.floor(Math.random() * 1000) + 1);
+            }
+
+            return array;
+        }
+    </script>
+</body>
+</html>

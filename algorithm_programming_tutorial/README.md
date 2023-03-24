@@ -8,5 +8,5 @@ https://www.youtube.com/watch?v=qQ5iLNjpxSk&list=PLRx0vPvlEmdDHxCvAQS1_6XV4deOwf
 https://blog.naver.com/ndb796/221226794899
 
 
-3
-https://blog.naver.com/ndb796/221226806398
+3. Insertion sort: https://blog.naver.com/ndb796/221226806398
+4. Quick Sort: https://blog.naver.com/ndb796/221226813382

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Quick Sort (퀵 정렬)
+        // 특정한 값을 기준으로 큰 숫자와 작은 숫자를 나누면 어떨까?
+    
+        function quickSort(arr) {
+            if(arr.length <= 1) {
+                return arr;
+            }
+
+            const pivot = arr[0];
+            const left = [];
+            const right = [];
+
+            for(let i=1; i<arr.length; i++) {
+                if(pivot > arr[i]) {
+                    left.push(arr[i]);
+                } else {
+                    right.push(arr[i]);
+                }
+            }
+
+            return [...quickSort(left), pivot, ...quickSort(right)];
+        }
+
+        const arr = [1, 10, 5, 8, 7, 6, 4, 3, 2, 9];
+        console.log(quickSort(arr));
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function bulitInFunc01() {
+            const arr = [1, 10, 5, 8, 7, 6, 4, 3, 2, 9];
+
+            //오름차순
+            arr.sort(function (a, b) {
+                return a - b;
+            });
+            console.log(arr);
+
+            //내림차순
+            arr.sort(function (a, b) {
+                return b - a;
+            });
+            console.log(arr);
+        }
+        bulitInFunc01();
+
+        function bulitInFunc02() {
+            const arr = ['banana', 'apple', 'cherry', 'date'];
+
+            // 오름차순 정렬
+            arr.sort(function(a, b) {
+                return a.localeCompare(b);
+            });
+            console.log(arr); // ['apple', 'banana', 'cherry', 'date']
+
+            // 내림차순 정렬
+            arr.sort(function(a, b) {
+                return b.localeCompare(a);
+            });
+            console.log(arr); // ['date', 'cherry', 'banana', 'apple']
+        }
+        bulitInFunc02();
+
+        
+
+        //value 오름차순
+        function bulitInFunc03(items) {        
+            items.sort(function(a, b) {
+                return a.value - b.value;
+            });
+            console.log(items);
+        }
+
+        //value 내림차순
+        function bulitInFunc04(items) {
+            items.sort(function(a, b) {
+                return b.value - a.value;
+            });
+            console.log(items);
+        }
+
+        //name 오름차순
+        function bulitInFunc05(items) {
+            items.sort((a, b) => {
+                const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+
+                // names must be equal
+                return 0;
+            });
+            console.log(items);
+        }
+
+        //name 내림차순
+        function bulitInFunc06(items) {
+            items.sort((a, b) => {
+                const nameA = a.name.toUpperCase();
+                const nameB = b.name.toUpperCase();
+
+                if (nameA > nameB) {
+                    return -1;
+                }
+
+                if (nameA < nameB) {
+                    return 1;
+                }
+
+                return 0;
+            });
+            
+            console.log(items);
+        }
+
+        const items = [
+            { name: "Edward", value: 21 },
+            { name: "Sharpe", value: 37 },
+            { name: "And", value: 45 },
+            { name: "The", value: -12 },
+            { name: "Magnetic", value: 13 },
+            { name: "Zeros", value: 37 },
+        ];
+
+        bulitInFunc03(items);
+        bulitInFunc04(items);
+        bulitInFunc05(items);
+        bulitInFunc06(items);
+
+    </script>
+</body>
+</html>

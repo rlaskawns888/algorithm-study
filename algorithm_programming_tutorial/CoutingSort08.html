@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            계수 정렬 Couting Sort
+
+            "크기를 기준으로 갯수를 세면 어떨까?"
+
+            - 아래의 배열에서 정렬할 데이터의 갯수는 30개인데, 모든 데이터가 1부터 5사이에 속한다는
+            특징이 있다.이처럼 범위 조건이 있는 경우에 한해서 굉장히 빠른 알고리즘이다.
+            
+            - O(N)
+
+            - https://bowbowbow.tistory.com/8
+
+        */
+
+        function countingSort(arr) {
+            const max = Math.max(...arr); // 최댓값 구하기
+            const count = new Array(max + 1).fill(0); // 카운트 배열 만들기
+
+            // 카운트 배열 채우기
+            for (let i = 0; i < arr.length; i++) {
+                count[arr[i]]++;
+            }
+            console.log(count);
+
+            // 누적 합 배열 만들기
+            for (let i = 1; i <= max; i++) {
+                count[i] += count[i - 1];
+            }
+            console.log(count);
+
+            const result = new Array(arr.length); // 결과 배열 만들기
+
+            // 입력 배열의 값을 읽어 누적 합 배열에 저장하기
+            for (let i = arr.length - 1; i >= 0; i--) {                
+                result[count[arr[i]] - 1] = arr[i];
+                count[arr[i]]--;
+            }
+
+            return result;
+        }
+
+
+        const arr = [1, 3, 2, 4, 3, 2, 5, 3, 1, 2, 3, 4, 4, 3, 5, 1, 2, 3, 5, 2, 3, 1, 4, 3, 5, 1, 2, 1, 1, 1];
+        console.log(countingSort(arr));
+        
+
+    </script>
+</body>
+</html>
+

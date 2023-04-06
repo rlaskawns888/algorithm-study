@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            스택(Stack)
+
+            스택은 데이터를 저장하고 검색하기 위한 추상 자료형 중 하나로, 나중에 추가된 데이터가 먼저 추출된다.
+            
+            - 후입선철(LIFO, Last-In-First-Out)
+            - 데이터 삽입 push
+            - 데이터 제거 pop
+            - ex) 웹 브라우저의 이전 페이지 기록, 함수 호출 및 실행 컨텍스트 저장에 사용됨.
+        */
+
+        class Stack {
+            constructor() {
+                this.items = [];
+            }
+
+            push(element) {
+                this.items.push(element);
+            }
+
+            pop() {
+                if(this.items.length === 0) {
+                    return "Underflow";
+                }
+
+                return this.items.pop();
+            }
+
+            peek() {
+                return this.items[this.items.length -1];
+            }
+
+            isEmpty() {
+                return this.items.length === 0;
+            }
+
+            printStack() {
+                let str = '';
+                for(let i=0; i<this.items.length; i++) {
+                    str += this.items[i] + " ";
+                }
+
+                return str;
+            }
+        }
+
+        let stack = new Stack();
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+
+        console.log(stack.printStack());
+        console.log(stack.pop());
+        console.log(stack.printStack());
+        console.log(stack.peek());
+
+    </script>
+</body>
+</html>

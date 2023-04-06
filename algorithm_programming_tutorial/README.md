@@ -13,4 +13,5 @@ https://www.youtube.com/watch?v=qQ5iLNjpxSk&list=PLRx0vPvlEmdDHxCvAQS1_6XV4deOwf
 7. 힙정렬: https://blog.naver.com/ndb796/221228342808
 8. 계수정렬: https://blog.naver.com/ndb796/221228361368
 9. 심화정렬문제 풀어보기: https://blog.naver.com/ndb796/221230380199
-10. 스택정렬: https://blog.naver.com/ndb796/221230937978
+10. 스택: https://blog.naver.com/ndb796/221230937978
+11. 큐: https://blog.naver.com/ndb796/221230944729

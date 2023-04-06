@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            큐(Queue)
+
+            - 데이터를 저장하고 처리하기 위한 자료 구조 중 하나
+            - 데이터가 먼저 들어온 순서대로 처리되기 떄문에 "선입선출" First-In-First-Out, FIFO
+            - 큐는 주로 작업 처리, 이벤트 처리, 네트워크 요청 처리 등 다양한 분야에서 사용됨.
+        */
+
+        const queue = [];
+
+        queue.push("data1");
+        queue.push("data2");
+        queue.push("data3");
+
+        const data1 = queue.shift();
+        console.log(data1);
+
+        const data2 = queue.shift();
+        console.log(data2);
+
+        const data3 = queue.shift();
+        console.log(data3);
+
+    </script>
+</body>
+</html>

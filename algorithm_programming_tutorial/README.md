@@ -15,3 +15,6 @@ https://www.youtube.com/watch?v=qQ5iLNjpxSk&list=PLRx0vPvlEmdDHxCvAQS1_6XV4deOwf
 9. 심화정렬문제 풀어보기: https://blog.naver.com/ndb796/221230380199
 10. 스택: https://blog.naver.com/ndb796/221230937978
 11. 큐: https://blog.naver.com/ndb796/221230944729
+12. 너비 우선 탐색(BFS): https://blog.naver.com/ndb796/221230944971
+13. 깊이 우선 탐색(DFS): https://blog.naver.com/ndb796/221230945092
+14. Union-Find(합집합 찾기): https://blog.naver.com/ndb796/221230967614

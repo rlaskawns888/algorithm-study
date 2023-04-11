@@ -8,6 +8,7 @@
 </head>
 <body>
     <script>
+        'use strict';
         /*
             Union Find (합집합 찾기)
             : 그래프 이론에서 두 노드가 같은 집합에 속해있는지 확인하기 위해 
@@ -27,39 +28,50 @@
             Find
             : 두 개의 노드의 부모 노드를 확인하여 현재 같은 집합에 속하는지 확인하는
             알고리즘
-        */
 
+            https://ip99202.github.io/posts/%EC%9C%A0%EB%8B%88%EC%98%A8-%ED%8C%8C%EC%9D%B8%EB%93%9C(Union-Find)/
+        */
+        
         class UnionFind {
             constructor(n) {
-                this.parent = Array(n);
-                this.rank = Array(n).fill(0);
-
+                this.parent = Array(n);        
+                this.rank = Array(n).fill(0);  
+                
                 for(let i=0; i<n; i++) {
                     this.parent[i] = i;
                 }
-            }
-            
+            }            
+            /*
+                uf.union(0, 1)
+
+                [0, 0, 2, 3, 4, 5, 6]
+                [1, 0, 0, 0, 0, 0, 0]
+            */
+
             find(x) {
-                if(this.parent[x] === x) return x;
+                if(this.parent[x] === x ) return x;
                 return (this.parent[x] = this.find(this.parent[x]));
             }
-
+            
             union(x, y) {
                 const rootX = this.find(x);
                 const rootY = this.find(y);
 
+                console.log('rootX: ', rootX);
+                console.log('rootY: ', rootY);
+
                 if(rootX === rootY) return false;
 
                 if(this.rank[rootX] > this.rank[rootY]) {
-                    this.parent[rootY] = rootX;
+
                 } else if(this.rank[rootX] < this.rank[rootY]) {
-                    this.parent[rootX] = rootY;
+                    // this.parent[rootX] = rootY;
                 } else {
                     this.parent[rootY] = rootX;
                     this.rank[rootX]++;
                 }
 
-                return true;
+                return true;                
             }
 
             connected(x, y) {
@@ -67,16 +79,54 @@
             }
         }
 
-        const uf = new UnionFind(5); // 5개의 원소를 가진 UnionFind 인스턴스 생성
-        console.log('uf: ', uf);
+        const uf = new UnionFind(7);        
+        /*
+            [0, 1, 2, 3, 4, 5, 6]
+            [0, 0, 0, 0, 0, 0, 0]
+        */
 
-        uf.union(0, 1); // 0번 원소와 1번 원소를 합침
-        uf.union(2, 3); // 2번 원소와 3번 원소를 합침
-        // console.log(uf.connected(0, 1)); // true 출력
-        // console.log(uf.connected(0, 2)); // false 출력
-        uf.union(1, 4); // 1번 원소와 4번 원소를 합침
-        // console.log(uf.connected(1, 4)); // true 출력
-        // console.log(uf.parent); // [1, 0, 2, 3, 1] 출력
+        uf.union(0, 1);
+        /*
+            uf.union(0, 1)
+
+            [0, 0, 2, 3, 4, 5, 6]
+            [1, 0, 0, 0, 0, 0, 0]
+        */
+
+        uf.union(2, 3);
+        /*
+            uf.union(2, 3)
+
+            [0, 0, 2, 2, 4, 5, 6]
+            [1, 0, 1, 0, 0, 0, 0]
+        */
+
+        console.log('uf.parent: ', uf.parent);
+        console.log('uf.rank: ', uf.rank);
+
+        console.log(uf.connected(2, 3));
+
+        /*
+            parent = [0, 1, 2, 3, 4, 5, 6]
+            rank   = [0, 0, 0, 0, 0, 0, 0]
+
+            -> union(0, 1) 실행
+
+            (0) ---- (1)
+
+            parent = [0, 0, 2, 3, 4, 5, 6]
+            rank   = [1, 0, 0, 0, 0, 0, 0]
+
+
+            * * * * * * * * * * * * * * * * 
+            
+
+            -> union(2, 3) 실행
+
+            [0, 0, 2, 2, 4, 5, 6]
+
+            [1, 0, 1, 0, 0, 0, 0]
+        */
     </script>
 </body>
 </html>

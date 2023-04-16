@@ -18,6 +18,7 @@ https://www.youtube.com/watch?v=qQ5iLNjpxSk&list=PLRx0vPvlEmdDHxCvAQS1_6XV4deOwf
 - 깊이 우선 탐색(DFS): https://blog.naver.com/ndb796/221230945092
 - 이진 트리의 구현과 순회(Traversal) 방식: https://blog.naver.com/ndb796/221233560789
 - 다이나믹 프로그래밍(Dynamic Programming): https://blog.naver.com/ndb796/221233570962
+- 에라토스테네스의 체: https://blog.naver.com/ndb796/221233595886
 
 **check**
 - Union-Find(합집합 찾기): https://blog.naver.com/ndb796/221230967614

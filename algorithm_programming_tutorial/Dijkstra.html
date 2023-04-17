@@ -22,24 +22,78 @@
             2. 출발 노드를 기준으로 각 노드의 최소 비용을 저장
             3. 방문하지 않은 노드 중에서 가장 비용이 적은 노드 선택
             4. 해당 노드를 거쳐서 특정한 노드로 가는 경우를 고려하여 최소 비용을 갱신
-            5. 위 과정에서 3번 ~ 4번을 반복
-
-
-            0 2 5 1 x x 
-
-            1번 노드 출발
-
-            가장 비용이 적게드는 노드 4 
-            (4번 노드를 거쳐서 가는 경우를 모두 고려하여 최소 비용 배열 갱신)
-
-
-            1 (1) 4 (1) 5
-            -> 4번을 거쳐서 가는비용이 2 
-
-            0 2 4 1 2 x 
-            
+            5. 위 과정에서 3번 ~ 4번을 반복            
  
         */
+
+        function dijkstra(graph, start) {
+            const distances = {}; // 거리 값을 저장할 객체
+            const visited = {}; // 방문한 정점을 저장할 객체
+            const queue = []; // 우선순위 큐
+
+            // 모든 정점의 거리 값을 무한대로 초기화
+            for (let vertex in graph) {
+                distances[vertex] = Infinity;
+            }
+            distances[start] = 0; // 시작 정점의 거리 값을 0으로 설정
+
+            // 시작 정점을 큐에 추가
+            queue.push(start);
+            
+
+            console.log('distances: ', distances);
+
+            while (queue.length) {
+                // 거리가 가장 작은 정점을 큐에서 꺼냄
+                const currentVertex = queue.shift();
+                // A
+                console.log('-------------------------');
+                console.log('currentVertex: ', currentVertex);
+
+                // 만약 현재 정점을 이미 방문한 경우 다음 순회로 넘어감
+                if (visited[currentVertex]) continue;                
+
+                // 현재 정점을 방문한 것으로 표시
+                visited[currentVertex] = true;
+
+                // 인접한 정점들을 탐색하면서 거리 값을 업데이트
+                for (let neighbor in graph[currentVertex]) {
+                    const distance = graph[currentVertex][neighbor];
+                    const totalDistance = distance + distances[currentVertex];
+
+
+                    console.log('distance: ', distance);
+                    console.log('distances: ', distances);
+                    console.log('totalDistance: ', totalDistance);
+
+                    if (totalDistance < distances[neighbor]) {
+                        distances[neighbor] = totalDistance;
+                        queue.push(neighbor);
+                    }
+                }
+            }
+
+            return distances; // 최단 거리 값들을 담은 객체 반환
+        }
+
+        // 예시 그래프
+        const graph = {
+            A: { B: 2, C: 5 },
+            B: { A: 2, D: 3, E: 1 },
+            C: { A: 5, F: 3 },
+            D: { B: 3 },
+            E: { B: 1, F: 7 },
+            F: { C: 3, E: 7 }
+        };
+        // 0 2 5 * * * 
+
+
+        const shortestDistances = dijkstra(graph, 'A');
+        console.log(shortestDistances);
+        // 0 2 5 5 3 8
+
+
+
 
 
     </script>

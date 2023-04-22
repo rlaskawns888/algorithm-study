@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <script>
+            /*
+                플로이드 와샬 Floyd Warshall 알고리즘
+
+                - 모든 정점에서 모든 정점으로의 최단 경로를 구하는 알고리즘
+                - 거쳐가는 정점을 기준으로 최단 거리를 구한다.
+
+            */
+
+           function floydWarshall(graph) {
+                const dist = Array.from({ length: graph.length }, () => Array.from({ length: graph.length }, () => Infinity));
+                console.log('dist: ',dist);
+
+                for(let i = 0; i < graph.length; i++) {
+                    for(let j = 0; j < graph.length; j++) {
+                        if(i === j) {
+                            dist[i][j] = 0;
+                        } else if(graph[i][j]) {
+                            dist[i][j] = graph[i][j];
+                        }
+                    }
+                }
+
+                for(let k = 0; k < graph.length; k++) {
+                    for(let i = 0; i < graph.length; i++) {
+                        for(let j = 0; j < graph.length; j++) {
+                            if(dist[i][k] + dist[k][j] < dist[i][j]) {
+                                dist[i][j] = dist[i][k] + dist[k][j];
+                            }
+                        }
+                    }
+                }
+                /*
+                    k: 거쳐가야하는 노드
+                    i: 시작 노드
+                    j: 끝 노드             
+                */
+
+                return dist;     
+           }
+
+            const graph = [
+                [0, 5, Infinity, 8],
+                [7, 0, 9, Infinity],
+                [2, Infinity, 0, 4],
+                [Infinity, Infinity, 3, 0],
+            ];
+
+            console.log(floydWarshall(graph)); 
+            /*
+                Output: [ 
+                    [ 0, 5, 11, 8 ], 
+                    [ 7, 0, 9, 16 ], 
+                    [ 2, 7, 0, 4 ], 
+                    [ Infinity, Infinity, 3, 0 ] 
+                ]
+            */
+
+
+        </script>
+</body>
+</html>

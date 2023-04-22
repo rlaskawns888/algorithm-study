@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            위상 정렬 Topology Sort
+
+            - 순서가 정해져 있는 작업을 차례로 수행해야 할 때 그 순서를 결정해주기 위해 사용하는 알고리즘
+            - 위상정렬은 DAG(Directed Acyclic Graph)에만 적용이 가능.
+            - 조건: 사이클이 발생하지 않는 방향 그래프에만 정렬을 가능하며, 사이클이 발생하는 경우
+            위상 정렬을 수행할 수 없다.
+
+            [위상 정렬 조건]
+            - 위상 정렬이 가능한지, (사이클 발생x)
+            - 위상 정렬이 가능하다면 그 결과가 무엇인지 체크
+
+            1) 진입차수가 0인 정점을 큐에 삽입
+            2) 큐에서 언소를 꺼내 연결된 모든 간선을 제거
+            3) 간선 제거 이후에 진입차수가 0이 된 정점을 큐에 삽입
+            4) 큐가 빌 떄까지 2번 ~ 3번 과정 반복, 모든 원소를 방문하기 전에 큐가 빈다면 사이클이
+            존재하는 것이고, 모든 원소를 방문했다면 큐에서 꺼낸 순서가 위상 정렬의 결과.
+
+
+            [알고리즘 예시]
+            - https://app.diagrams.net/#G1sAVshPHqQkPPjFfXTKI3p7Kc-bk85HTL
+
+
+                  1
+                /   \
+               2     5
+              /       \
+             3         7
+              \       /
+               4     /
+                \   /
+                  6
+
+        */
+
+        function topologicalSort(graph) {
+            let queue = [];
+            let inDegree = new Array(graph.length).fill(0);
+            let result = [];
+
+            console.log('inDegree: ', inDegree);
+            // [0, 0, 0, 0, 0, 0, 0]
+
+            //각 노드의 진입 차수를 계산
+            for(let i = 0; i < graph.length; i++) {
+                for(let j = 0; j < graph.length; j++) {
+                    inDegree[graph[i][j]]++;
+                }
+            }            
+            console.log('inDegree: ', inDegree);
+            //  [0, 1, 1, 1, 1, 1, 1, NaN]
+        }
+
+
+        let graph = [
+            [1],    // 0
+            [2, 5], // 1
+            [3],    // 2
+            [4, 6], // 3
+            [],     // 4
+            [7],    // 5
+            [],     // 6
+        ];
+
+        let sorted = topologicalSort(graph);
+        console.log(sorted);
+
+        // output: 1 -> 2 -> 5 -> 3 -> 4 -> 6 -> 7
+
+    </script>
+</body>
+</html>

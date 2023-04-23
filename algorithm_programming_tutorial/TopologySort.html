@@ -53,12 +53,35 @@
 
             //각 노드의 진입 차수를 계산
             for(let i = 0; i < graph.length; i++) {
-                for(let j = 0; j < graph.length; j++) {
+                for(let j = 0; j < graph[i].length; j++) {
                     inDegree[graph[i][j]]++;
                 }
             }            
             console.log('inDegree: ', inDegree);
             //  [0, 1, 1, 1, 1, 1, 1, NaN]
+
+            // 진입 차수가 0인 노드를 큐에 삽입
+            for(let i = 0; i < inDegree.length; i++) {
+                if(inDegree[i] === 0) {
+                    queue.push(i);
+                }
+            }
+
+            while(queue.length > 0) {
+                let node = queue.shift();
+                result.push(node);
+
+                for(let i = 0; i < graph[node].length; i++) {
+                    let nextNode = graph[node][i];
+                    inDegree[nextNode]--;
+
+                    if(inDegree[nextNode] === 0) {
+                        queue.push(nextNode);
+                    }
+                }
+            }
+
+            return result;
         }
 
 
@@ -71,11 +94,11 @@
             [7],    // 5
             [],     // 6
         ];
+       
 
         let sorted = topologicalSort(graph);
         console.log(sorted);
-
-        // output: 1 -> 2 -> 5 -> 3 -> 4 -> 6 -> 7
+        // [0, 1, 2, 5, 3, 4, 6]
 
     </script>
 </body>

@@ -46,31 +46,49 @@
             : https://www.geeksforgeeks.org/strongly-connected-components/        
         */
 
+        //그래프 클래스 정의
         class Graph {
+            //정점 수를 초기화하고 빈 Map 객체를 생성
             constructor(vertices) {
-                this.V = vertices;
-                this.graph = new Map();
+                this.V = vertices; //정점의 수
+                this.graph = new Map(); //빈 Map 객체 생성
             }
+            //주어진 간선을 그래프에 추가
             addEdge(u, v) {
-                if(!this.graph.has(u)) {
-                    this.graph.set(u, []);
+                if(!this.graph.has(u)) { //만약 그래프에 해당 정점이 없다면
+                    this.graph.set(u, []); //해당 정점을 키로 하는 빈 배열 생성
                 }
-                this.graph.get(u).push(v);
-
+                this.graph.get(u).push(v); //정점 u의 인접 리스트에 v를 추가
                 console.log('graph: ', this.graph);
             }
+            //강한 요소를 출력하는 함수
             printSCCs() {
-                const stack = [];
-                const visited = Array(this.V).fill(false);
+                const stack = []; //DFS 순회에서 마지막으로 방문한 시간을 기준으로 정점을 저장하기 위한 스택을 초기화
+                const visited = Array(this.V).fill(false); //방문한 정점을 표시하기 위한 배열을 초기화
                 
                 this.graph.forEach((_, i) => {
                     if(!visited[i]) {
-                        // console.log('-: ', _);
-                        // console.log('-: ', i);
                         this.fillOrder(i, visited, stack);
+                        //방문하지 않은 경우 해당 함수 호출
                     }
                 });
+
+                //그래프 전치를 구함
+                const gr = this.getTranspose();
+                console.log('graph transpose: ', gr);
+
+                visited.fill(false);
+                console.log('visited: ', visited);
+
+                //스택이 빌 떄까지 DFSUtil을 호출하여 SCC를 출력.
+                while(stack.length) {
+                    const i = stack.pop();
+                    gr.DFSUtil(i, visited);
+                    console.log("");
+                }
+
             }
+            //DFS 순회에서 마지막으로 방문한 시간을 기준으로 스택에 정점을 채우는 함수
             fillOrder(v, visited, stack) {
                 visited[v] = true;
 
@@ -83,55 +101,52 @@
                     });
                 }
                 stack.push(v);
-
                 console.log('stack: ', stack);
             }
-            printSCCs() {
-                const stack = [];
-                const visited = Array(this.V).fill(false);
-                this.graph.forEach((_, i)) => {
-                    if(!visited[i]) {
-                        this.fillOrder(i, visited, stack);
-                    }
-                }
+            //그래프의 전치(Transpose)를 구하는 함수
+            /*
+                그래프에서 전치(transpose)란, 
+                모든 간선의 방향을 반대로 바꾸어 얻은 새로운 그래프를 말합니다. 
+                예를 들어, (1, 2)라는 간선이 있는 그래프에서는 (1, 2) 방향으로 가는 간선이 존재하며, 
+                이를 전치하면 (2, 1) 방향으로 가는 새로운 간선이 생깁니다. 
+                즉, 각 정점의 진출 차수(out-degree)와 진입 차수(in-degree)가 서로 바뀌게 됩니다   
+            */
+            getTranspose() {
+                const g = new Graph(this.V); //동일한 개수의 정점을 갖는 새로운 Graph 객체 생성
+                this.graph.forEach((adj, i) => {
+                    adj.forEach(v => g.addEdge(v, i));
+                });
 
-                const gr = this.getTranspose();
-                visited.fill(false);
-
-                while(stack.length) {
-                    const i = stack.pop();
-                    if(!visited[i]) {
-                        gr.DFSUtill(i, visited);
-                        console.log("");
-                    }
-                }
-            }
-            DFSUtill(v, visited) {
-                visited[v] = ture;
+                return g;
+            }      
+            
+            //깊이 우선 탐색 (DFS) 유틸리티 함수: 주어진 정점에서 시작하여 방문한 정점을 표시
+            DFSUtil(v, visited) {
+                visited[v] = true;
                 console.log(v);
+
                 const adj = this.graph.get(v);
                 if(adj) {
                     adj.forEach(i => {
                         if(!visited[i]) {
-                            this.DFSUtill(i, visited);
+                            this.DFSUtil(i, visited);
                         }
                     });
-                }
+                }                
             }
         }
+
+
         const g = new Graph(11);
         g.addEdge(1, 2);
         g.addEdge(2, 3);
-        g.addEdge(3, 1);
-        
+        g.addEdge(3, 1);        
         g.addEdge(4, 2);
-        g.addEdge(4, 5);
-        
+        g.addEdge(4, 5);        
         g.addEdge(5, 7);
         g.addEdge(6, 5);
         g.addEdge(7, 6);
-
-        g.addEdge(8, 5);
+        g.addEdge(8, 5);        
         g.addEdge(8, 9);
         g.addEdge(9, 10);
         g.addEdge(10, 11);

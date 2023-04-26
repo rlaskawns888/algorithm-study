@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            <네트워크 플로우 Network Flow>
+            : 특정한 지점에서 다른 지점으로 데이터가 얼마나 많이 흐르고 있는가를 측정하는 알고리즘
+
+
+            <Q. 최대 유량(maxinum flow) 문제>
+                서울 - 8 - 대전 - 3 - 부산
+
+                간단히, 서울에서 대전으로 가는 길의 폭이 8
+                대전에서 부산으로 가는 폭이 3
+
+                이러한 상황에서 길을 건너는데 1초가 걸린다고했을때, 
+
+                이 떄 서울엥서 부산으로 사람을 8명을 보냈을 경우,
+                1초가 지난뒤에는 어떻게 될까?
+
+            A.
+                서울 - 대전: 5명
+                대전 - 부산: 3명
+
+            -> 최대 유량(maxinum flow) 문제. 최대 유량 문제는 네트워크의 두 노드간에
+            흐를 수 있는 최대 양을 결정하는 문제. 이 문제에서는 서울에서 부산으로 보낼 수 있는
+            최대 사람수를 찾는 것이 목적.
+
+
+            <용량(capacity)>
+            : 간선이나 노드가 얼마나 많은 양의 데이터를 전송할 수 있는지를 나타내는 값.
+            예를 들어, 서울에서 대전으로 가는 간선의 용량이 8이면, 서울에서 대전으로 최대 8개의 사람을 전송할수 있다는것을 의미
+
+
+            <유량(Flow)>
+            : 간선이나 노드를 통해 전송되는 실제 데이터의 양.
+            예를 들어, 서울에서 대전으로 4명의 사람이 전송되었다면, 이 간선의 유량은 4가 된다.
+        */
+
+        // 기본적으로 최대 유량 문제는 단순하게 가능한 모든 경우의 수를 탐색하는 방법을 사용한다
+        // 이 떄 BFS(너비 우선 탐색)을 이용하는것이 일반적이다.
+        // 이것을 에드몬드 카프(Edmonds-Karp) 알고리즘 이라고 한다.
+
+
+        // https://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/
+        // let graph = [ [ 0, 16, 13, 0, 0, 0 ],
+        //       [ 0, 0, 10, 12, 0, 0 ],
+        //       [ 0, 4, 0, 0, 14, 0 ], 
+        //       [ 0, 0, 9, 0, 0, 20 ],
+        //       [ 0, 0, 0, 7, 0, 4 ],  
+        //       [ 0, 0, 0, 0, 0, 0 ] ];
+
+        // console.log(fordFulkerson(graph, 0, 5));
+
+        class Graph {
+            constructor(vertices) {
+                this.vertices = vertices;
+                this.adjMatrix = [];
+                for(let i = 0; i < vertices; i++) {
+                    this.adjMatrix[i] = [];
+
+                    for(let j = 0; j < vertices; j++) {
+                        this.adjMatrix[i][j] = 0;
+                    }
+                }
+            }
+            addEdge(source, destination, weight) {
+                this.adjMatrix[source][destination] = weight;
+            }
+
+            //너비 우선 탐색(BFS) 알고리즘
+            //: source 노드에서 sink 노드로 가는 경로를 찾아주는 역할을함.
+            bfs(start, end, parent) {
+                let visited = [];
+                for(let i = 0; i < this.vertices; i++) {
+                    visited[i] = false;
+                }
+
+                let queue = [];
+                queue.push(start); //0
+
+                //0번째 방문
+                visited[start] = true;
+
+                // [-1]
+                parent[start] = -1;
+
+                while(queue.length !== 0) {
+                    //0
+                    let currentNode = queue.shift(); 
+                    for(let i = 0; i < this.vertices; i++) {
+                        if(!visited[i] && this.adjMatrix[currentNode][i] > 0) {
+                            queue.push(i);
+                            parent[i] = currentNode;
+                            visited[i] = true;
+                        }
+                    }                    
+                }
+
+                return visited[end];
+            }
+            maxFlow(source, sink) {
+                let parent = [];
+                let maxFlow = 0;
+
+                console.log(this.bfs(source, sink, parent));
+
+                // while(this.bfs(source, sink, parent)) {
+
+                // }
+            }
+        }
+
+        //그래프 생성 및 엣지 추가
+        let graph = new Graph(6);
+        /*
+            0 : (6) [0, 0, 0, 0, 0, 0]
+            1 : (6) [0, 0, 0, 0, 0, 0]
+            2 : (6) [0, 0, 0, 0, 0, 0]
+            3 : (6) [0, 0, 0, 0, 0, 0]
+            4 : (6) [0, 0, 0, 0, 0, 0]
+            5 : (6) [0, 0, 0, 0, 0, 0]
+        */
+        graph.addEdge(0, 1, 16);
+        graph.addEdge(0, 2, 13);
+        graph.addEdge(1, 2, 10);
+        graph.addEdge(1, 3, 12);
+        graph.addEdge(2, 1, 4);
+        graph.addEdge(2, 4, 14);
+        graph.addEdge(3, 2, 9);
+        graph.addEdge(3, 5, 20);
+        graph.addEdge(4, 3, 7);
+        graph.addEdge(4, 5, 4);
+
+        console.log('graph: ', graph);
+
+        // 최대 유량 계산
+        let source = 0;
+        let sink = 5;
+        let maxFlow = graph.maxFlow(source, sink);
+        console.log("The maximum flow is: " + maxFlow);
+
+
+               
+
+//         class Graph {
+//   constructor(vertices) {
+//     this.vertices = vertices;
+//     this.adjMatrix = [];
+//     for (let i = 0; i < vertices; i++) {
+//       this.adjMatrix[i] = [];
+//       for (let j = 0; j < vertices; j++) {
+//         this.adjMatrix[i][j] = 0;
+//       }
+//     }
+//   }
+
+//   addEdge(source, destination, weight) {
+//     this.adjMatrix[source][destination] = weight;
+//   }
+
+//   bfs(start, end, parent) {
+//     let visited = [];
+//     for (let i = 0; i < this.vertices; i++) {
+//       visited[i] = false;
+//     }
+//     let queue = [];
+//     queue.push(start);
+//     visited[start] = true;
+//     parent[start] = -1;
+//     while (queue.length !== 0) {
+//       let currentNode = queue.shift();
+//       for (let i = 0; i < this.vertices; i++) {
+//         if (!visited[i] && this.adjMatrix[currentNode][i] > 0) {
+//           queue.push(i);
+//           parent[i] = currentNode;
+//           visited[i] = true;
+//         }
+//       }
+//     }
+//     return visited[end];
+//   }
+
+//   maxFlow(source, sink) {
+//     let parent = [];
+//     let maxFlow = 0;
+//     while (this.bfs(source, sink, parent)) {
+//       let pathFlow = Infinity;
+//       for (let currentNode = sink; currentNode !== source; currentNode = parent[currentNode]) {
+//         let previousNode = parent[currentNode];
+//         pathFlow = Math.min(pathFlow, this.adjMatrix[previousNode][currentNode]);
+//       }
+//       for (let currentNode = sink; currentNode !== source; currentNode = parent[currentNode]) {
+//         let previousNode = parent[currentNode];
+//         this.adjMatrix[previousNode][currentNode] -= pathFlow;
+//         this.adjMatrix[currentNode][previousNode] += pathFlow;
+//       }
+//       maxFlow += pathFlow;
+//     }
+//     return maxFlow;
+//   }
+// }
+
+// // 그래프 생성 및 엣지 추가
+// let graph = new Graph(6);
+// graph.addEdge(0, 1, 16);
+// graph.addEdge(0, 2, 13);
+// graph.addEdge(1, 2, 10);
+// graph.addEdge(1, 3, 12);
+// graph.addEdge(2, 1, 4);
+// graph.addEdge(2, 4, 14);
+// graph.addEdge(3, 2, 9);
+// graph.addEdge(3, 5, 20);
+// graph.addEdge(4, 3, 7);
+// graph.addEdge(4, 5, 4);
+
+// // 최대 유량 계산
+// let source = 0;
+// let sink = 5;
+// let maxFlow = graph.maxFlow(source, sink);
+// console.log("The maximum flow is: " + maxFlow);
+
+    </script>
+</body>
+</html>
+

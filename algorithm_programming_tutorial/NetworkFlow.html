@@ -59,6 +59,7 @@
         // console.log(fordFulkerson(graph, 0, 5));
 
         class Graph {
+
             constructor(vertices) {
                 this.vertices = vertices;
                 this.adjMatrix = [];
@@ -70,6 +71,7 @@
                     }
                 }
             }
+
             addEdge(source, destination, weight) {
                 this.adjMatrix[source][destination] = weight;
             }
@@ -81,6 +83,7 @@
                 for(let i = 0; i < this.vertices; i++) {
                     visited[i] = false;
                 }
+                console.log(visited);
 
                 let queue = [];
                 queue.push(start); //0
@@ -109,11 +112,26 @@
                 let parent = [];
                 let maxFlow = 0;
 
-                console.log(this.bfs(source, sink, parent));
+                while(this.bfs(source, sink, parent)) {
+                    console.log(parent);
 
-                // while(this.bfs(source, sink, parent)) {
+                    let pathFlow = Infinity;
+                    for(let currentNode = sink; currentNode !== source; currentNode = parent[currentNode]) {                        
+                        let previousNode = parent[currentNode];
+                        pathFlow = Math.min(pathFlow, this.adjMatrix[previousNode][currentNode]);
 
-                // }
+                        console.log('**************');
+                        console.log('currentNode: ', currentNode);
+                        console.log('previousNode: ', previousNode);
+                        console.log('pathFlow: ', pathFlow);
+                    }
+
+                    
+
+                    return;
+                }
+
+                return 1;
             }
         }
 

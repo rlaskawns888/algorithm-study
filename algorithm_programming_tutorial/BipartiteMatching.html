@@ -10,16 +10,55 @@
     <script>
         /*
             이분 매칭 Bipartite Matching
-
-
         */
+
+        const temp = [];
+        temp[1] = [1, 2, 3];
+        temp[2] = [1];
+        temp[3] = [3];
+        //1번: 1, 2, 3의 매칭을 원함
+        //2번: 1의 매칭을 원함
+        //3번: 2의 매칭을 원함 
+
+        const visited = new Array(temp.length); //방문여부
+        const match = new Array(temp.length);
+
+        console.log('temp: ', temp);        
+        console.log('temp Len: ', temp.length);
+        console.log('match: ', match);
         
+        let count = 0;
+        for (let i = 1; i < temp.length; i++) {
+            visited.fill(false);
+            if(dfs(i)) count++;
+        }
+
+        function dfs(node) {
+            console.log(' ---------- ');
+            if(visited[node]) {
+                return false;
+            }
+            //방문여부 체크
+
+            visited[node] = true;
+            //해당 index 방문함
+
+            for(const neighbor of temp[node]) {
+                console.log('neighbor: ', neighbor);
+
+                if(!match[neighbor] || dfs(match[neighbor])) {
+                    match[neighbor] = node;
+
+                    console.log('match: ', match);
+
+                    return true;
+                }
+            }
+
+            return false;            
+        }
 
 
-        // const temp = [];
-        // temp[1] = [1, 2, 3];
-        // temp[2] = [1];
-        // temp[3] = [2];
 
         // const visited = new Array(temp.length);
         // const match = new Array(temp.length);

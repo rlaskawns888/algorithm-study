@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            BFS
+
+            https://blog.naver.com/ndb796/221230944971
+
+            Bireadth First Search
+
+            탐색을 할 떄 너비를 우선으로 하여 탐색을 수행하는 탐색 알고리즘
+
+            Queue
+        */
+
+        let graph = Array.from({length: 8}, () => []);
+
+        function bfs(x) {
+            const visited = Array.from({length: 8}, () => false);
+            let queue = [];
+
+            queue.push(x);
+            visited[x] = true;
+
+            while(queue.length > 0) {
+                const v = queue.shift();
+                console.log(v);
+
+                for(const nv of graph[v]) {
+                    if(!visited[nv]) {
+                        visited[nv] = true;
+                        queue.push(nv);
+                    }                    
+                }
+            }
+        }
+
+        graph[1].push(2);
+        graph[2].push(1);
+
+        graph[1].push(3);
+        graph[3].push(1);
+
+        graph[2].push(3);
+        graph[3].push(2);
+
+        graph[2].push(4);
+        graph[4].push(2);
+
+        graph[2].push(5);
+        graph[5].push(2);
+
+        graph[3].push(6);
+        graph[6].push(3);
+
+        graph[3].push(7);
+        graph[7].push(3);
+
+        graph[4].push(5);
+        graph[5].push(4);
+
+        graph[6].push(7);
+        graph[7].push(6);
+
+        bfs(1);
+
+    </script>
+</body>
+</html>

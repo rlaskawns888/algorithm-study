@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            이분 매칭 Bipartite Matching
+            -> 이분 매칭은 A집단이 B집단을 선택하는 방법에 대한 알고리즘
+
+            그래프 이론에서 매칭 문제를 해결하는 알고리즘 중 하나.
+            매칭 문제란, 주어진 그래프에서 각 정점이 최대 한 번씩만 선택되는 조건 하에
+            최대한 많은 간석을 선택하는 문제.
+
+            이분 매칭은 이러한 매칭 문제를 해결하는 알고리즘으로, 이분 그래프에서 
+            각 정점이 양쪽 그룹 중 하나에 속하며, 한쪽 그룹의 모든 정점이 반드시 
+            다른 쪽 그룹의 정점과 매칭되도록 하는것을 목표로 한다.
+
+
+            이분 매칭을 구현하는 방법은 여러가지가 있지만, 대표적인 방법중 하나는 헝기리안
+            알고리즘이며, 이 알고리즘은 이분 그래프의 좌측 그룹 정점과 우측 그룹 정점을
+            매칭시키는 최적의 방법을 찾는 것으로, 시간 복잡도는 O(V^3) 이다.
+            
+        */
+
+        //ex) https://velog.io/@hd3946/JS-%EC%9D%B4%EB%B6%84%ED%83%90%EC%83%89-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98
+
+        let n = 3;
+        let arr = Array.from({length: n + 1}, () => []);
+        let selected = Array.from({length: n + 1}, () => 0); 
+        let visited = Array.from({length: n + 1}, () => false); //방문여부        
+
+        function dfs(x) {
+            //1 
+            //2 
+            for(const element of arr[x]) {
+                let t = element; 
+                // 1, 2, 3
+                // 1
+
+                if(visited[t]) {
+                    continue;
+                }
+                visited[t] = true;
+
+                if(selected[t] === 0 || dfs(selected[t])) {
+                    selected[t] = x;
+
+                    console.log('selected: ', selected);
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function bipartiteMatching() {
+            arr[1].push(1);
+            arr[1].push(2);
+            arr[1].push(3);
+            arr[2].push(1);
+            arr[3].push(2);
+
+            let count = 0;
+            for(let i = 1; i <= n; i++) {
+                visited = Array.from({length: n + 1}, () => false); //방문여부 초기화
+                if(dfs(i)) count++;
+            }
+            console.log('count: ', count);
+        }
+
+        bipartiteMatching();
+
+    </script>
+</body>
+</html>

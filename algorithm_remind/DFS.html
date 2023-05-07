@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            DFS 
+
+            - https://blog.naver.com/ndb796/221230945092
+
+
+            Death First Search
+            
+            탐색을 함에 있어서 보다 깊은 것을 우선적으로 하여 탐색하는 알고리즘
+
+            Stack 사용
+
+
+        */
+
+        let graph = Array.from({length: 8}, () => []);
+        let visited = Array.from({length: 8}, () => false);
+        
+        function dfs(x) {
+            if(visited[x]) {
+                return;
+            }
+            visited[x] = true;
+
+            console.log(x);
+
+            for(const element of graph[x]) {
+                dfs(element);
+            }
+        }
+
+        graph[1].push(2);
+        graph[2].push(1);
+
+        graph[1].push(3);
+        graph[3].push(1);
+
+        graph[2].push(3);
+        graph[3].push(2);
+
+        graph[2].push(4);
+        graph[4].push(2);
+
+        graph[2].push(5);
+        graph[5].push(2);
+
+        graph[3].push(6);
+        graph[6].push(3);
+
+        graph[3].push(7);
+        graph[7].push(3);
+
+        graph[4].push(5);
+        graph[5].push(4);
+
+        graph[6].push(7);
+        graph[7].push(6);
+
+        console.log('graph: ', graph);
+
+        dfs(1);
+
+        // output
+        // : 1 2 3 6 7 4 5
+
+    </script>
+</body>
+</html>

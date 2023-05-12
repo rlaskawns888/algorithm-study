@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            KMP 알고리즘
+            
+            - 대표적인 문자열(String) 매칭 알고리즘
+
+            - 기본적으로 문자열 매칭 알고리즘이란 특정한 글이 있을 때 그 글 안에서 하나의 문자열을 찾는 알고리즘.
+        */
+
+        /*
+            ex1) 단순 비교 문자열 매칭 알고리즘 
+
+            긴글(Parent): BCDEF
+            찾을문자열: DEF
+
+            1.찾을 문자열인 DE를 가장 앞 부분에 위치 시킨다
+            B C D E F
+              D E F 
+
+            2. 일치하지 않았기 떄문에 앞으로 한칸 더 이동한다
+            B C D E F
+                D E F 
+
+            매칭 완료.
+        */
+        function simpleStrMatching() {
+
+            function findStr(parent, pattern) {            
+                let parentLen = parent.length;
+                let patternLen = pattern.length;
+
+                for(let i = 0; i <= parentLen - patternLen; i++) {
+                    let finded = true;
+
+                    for(let j = 0; j < patternLen; j++) {
+                        if(parent[i + j] != pattern[j]) {
+                            finded = false;
+                            break;
+                        }
+                    }
+
+                    if(finded) {
+                        return i;
+                    }
+                }
+
+                return -1;
+            }
+
+            let parent = 'BCDEF';
+            let pattern = 'DEF';
+
+            let idx = findStr(parent, pattern);
+            console.log(idx);
+        }
+
+        // simpleStrMatching();
+        
+
+        /*
+            ex2) 최대 일치 길이 구하기
+        */
+        function maxStrLength() {
+            const makeTable = (pattern) => {
+                const len = pattern.length;
+                const table = Array(len).fill(0);
+                
+                let j = 0;
+
+                for(let i = 1; i < len; i++) {
+                    while(j > 0 && pattern[i] != pattern[j]) {
+                        j = table[j - 1];
+                    }
+                    if(pattern[i] == pattern[j]) {
+                        table[i] = ++j;
+                    }
+                }
+
+                return table;
+            };
+
+            let pattern = 'abacaaba';
+            let table = makeTable(pattern);
+            console.log('res: ', table);
+            // output : [0, 0, 1, 0, 1 ,1 ,2 ,3]
+
+            /*
+                a - 0
+                ab - 0
+                aba - 1
+                abac - 0
+                abaca - 1
+                abacaa - 1
+                abacaab - 2
+                abacaaba - 3
+
+                a - 0
+                ab - 0
+                [a]b[a] - 1
+                abac - 0
+                [a]bac[a] - 1
+                [a]baca[a] - 1
+                [ab]aca[ab] - 2
+                [aba]ca[aba] - 3
+            */
+        }
+
+        // maxStrLength(); //최대 일치 구하기
+        
+
+        /*
+            KMP  알고리즘
+        */
+
+        function KMP() {
+            const makeTable = (pattern) => {
+                let len = pattern.length;
+                let table = Array(len).fill(0);
+                let j = 0;
+
+                for(let i = 1; i < len; i++) {
+                    while(j > 0 && pattern[i] != pattern[j]) {
+                        j = table[j - 1];
+                    }
+                    if(pattern[i] == pattern[j]) {
+                        table[i] = ++j;
+                    }
+                }
+
+                return table;
+            };
+
+            const kmpAlgorithm = (parent, pattern) => {
+                let table = makeTable(pattern); //최대 일치 구하기                
+                console.log(table);
+                // [0, 0, 1, 0, 1, 1, 2, 3]
+
+                let parentLen = parent.length;
+                let patternLen = pattern.length;
+                let j = 0;
+
+                for(let i = 0; i < parentLen; i++) {
+                    while(j > 0 && parent[i] != pattern[j]) {
+                        j = table[j - 1];
+                    }
+                    if(parent[i] == pattern[j]) {
+                        if(j == patternLen - 1) {
+                            console.log(i - patternLen + 2);
+                            j = table[j];
+                        } else {
+                            j++;
+                        }
+                    }
+                }
+            };
+
+            let parent = 'ababacabacaabacaaba';
+            let pattern = 'abacaaba';
+
+            kmpAlgorithm(parent, pattern);
+        }
+
+        KMP();
+
+    </script>
+</body>
+</html>

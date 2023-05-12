@@ -33,14 +33,10 @@
         let arr = Array.from({length: n + 1}, () => []);
         let selected = Array.from({length: n + 1}, () => 0); 
         let visited = Array.from({length: n + 1}, () => false); //방문여부        
-
-        function dfs(x) {
-            //1 
-            //2 
+        
+        function dfs(x) {            
             for(const element of arr[x]) {
                 let t = element; 
-                // 1, 2, 3
-                // 1
 
                 if(visited[t]) {
                     continue;
@@ -48,16 +44,14 @@
                 visited[t] = true;
 
                 if(selected[t] === 0 || dfs(selected[t])) {
+                    console.log('');
                     selected[t] = x;
-
-                    console.log('selected: ', selected);
-
                     return true;
                 }
             }
             return false;
         }
-
+       
         function bipartiteMatching() {
             arr[1].push(1);
             arr[1].push(2);
@@ -71,6 +65,12 @@
                 if(dfs(i)) count++;
             }
             console.log('count: ', count);
+
+            for(let i = 1; i <= 100; i++) {
+                if(selected[i]) {
+                    console.log(selected[i], "-", i);   
+                }
+            }
         }
 
         bipartiteMatching();

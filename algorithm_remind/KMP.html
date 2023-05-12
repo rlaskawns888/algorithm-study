@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        let parent = 'ababacabacaabacaaba';
+        let pattern = 'abacaaba';
+
+        //최대 일치 길이
+        function makeTable(pattern) {
+            let len = pattern.length;
+            let table = Array(len).fill(0);
+
+            let j = 0;
+            for(let i = 1; i < len; i++) {
+                while(j > 0 && pattern[i] != pattern[j]) {
+                    table[j] = 
+                }
+                if(pattern[i] == pattern[j]) {
+                    j++;
+                }
+            }
+
+            
+            return table;
+        }
+
+        function KMP(parent, pattern) {
+            let table = makeTable(pattern);
+            console.log(table);
+        }
+
+        KMP(parent, pattern);
+
+
+
+
+    </script>
+</body>
+</html>

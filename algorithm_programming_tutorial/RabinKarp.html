@@ -59,23 +59,64 @@
             let parentHash = 0;
             let patternHash = 0;
             let power = 1;
+
+            console.log('parentLen: ', parentLen);
+            console.log('patternLen: ', patternLen);
             
+            // 19 - 8 = 11            
             for(let i = 0; i <= parentLen - patternLen; i++) {
+
+                //초기 해시값을 계산.
                 if(i == 0) {
                     for(let j = 0; j < patternLen; j++) {
-                        //긴 글 해시값 = 2 * (긴 글 해시값 - 가장 앞에 있는 문자의 수치) + 새롭게 들어온 문자의 수치
-
-                        parentHash = parentHash + parent[patternLen - 1 - j].charCodeAt() * power;
-                        patternHash = patternHash + pattern[patternLen - 1 - j].charCodeAt() * power;
+                        parentHash = parentHash + parent[patternLen - 1 - j].charCodeAt(0) * power;
+                        patternHash = patternHash + pattern[patternLen - 1 - j].charCodeAt(0) * power;
                         
+                        if(j < patternLen -1) {
+                            power = power * 2;
+                        }
+
+                        console.log('* * * * *');
+                        console.log('j: ', j);
                         console.log('parentHash: ', parentHash);
                         console.log('patternHash: ', patternHash);
-                        
+                    }
+                } else {
+                    //긴 글 해시값 = 2 * (긴 글 해시값 - 가장 앞에 있는 문자의 수치) + 새롭게 들어온 문자의 수치 
+                    parentHash = 2 * (parentHash - parent[i - 1].charCodeAt(0) * power) + parent[patternLen - 1 + i].charCodeAt(0);
+                }
+
+                /*
+                    첫 번째 반복에서 i가 0인 경우, 초기 해시 값을 계산 하기 위해서 이다.
+                    이는 패턴과 텍스트의 첫 번째 부분 문자열에 대한 해시 값을 구하는것이다.
+
+                    따라서 for문 내부에서는 패턴 길이에 해당하는 부분에서 시작하여 역순으로 문자를 가져와서
+                    각 문자의 수치(charCodeAt)와 power 값을 곱하여 parenthash, patternHash를 누적한다.
+
+                    여기서 power 값은 패턴 길이에 따라 계산되며, 보통은 패턴 길이 -1에 해당하는 2의 거듭 제곱 값이다.
+                    power 값은 나중에 사용되는데, 해시 값을 업데이트할 때 가장 앞에 있는 문자를 제거하고 새로운 문자를
+                    추가하는 과정에서 사용된다.
+
+                    이렇게 첫 번째 반복에서 초기 해시값을 계산하고, 이후 반복에서는 해당 값에 power와 새로운 문자의 수치를
+                    곱하여 업데이트 한다.
+
+                    따라서 if문에서 parentHash, patternHash를 초기화하는 것은 첫번째 반복에서 해시 값을 계산하기 위함이다.
+                */
+
+                if(parentHash == patternHash) {
+                    let finded = true;
+                    for(let j = 0; j < patternLen; j++) {
+                        if(parent[i + j] != pattern[j]) {
+                            finded = false;
+                            break;
+                        }
+                    }
+                    if(finded) {
+                        console.log('->  ', i + 1);
                     }
                 }
             }
         }
-
     </script>
 </body>
 </html>

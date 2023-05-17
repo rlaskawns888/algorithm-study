@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kruskal</title>
+</head>
+<body>
+    <script>
+        /*
+            Kruskal
+
+            가장 적은 비용으로 모든 노드를 연결
+        */
+    
+        class Edge {
+            constructor(a, b, distance) {
+                this.node = [a, b];
+                this.distance = distance;
+            }
+            static compare(edge1, edge2)  {
+                return edge1.distance - edge2.distance;
+            }
+        }
+
+        //부모 노드를 병합
+        function unionParent(parent, a, b) {
+            a = getParent(parent, a);
+            b = getParent(parent, b);
+
+            if(a < b) {
+                parent[b] = a;
+            } else {
+                parent[a] = b;
+            }
+        }
+
+        //부모 노드 가져옴
+        function getParent(parent, x) {
+            if(parent[x] == x) {
+                return x;
+            }
+            return parent[x] = getParent(parent, parent[x]);
+        }
+
+        //같은 부모를 가졌는지 확인
+        function find(parent, a, b) {
+            a = getParent(parent, a);
+            b = getParent(parent, b);
+
+            if(a == b) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
+        let n = 7; //노드 7개
+        let m = 11; //간선 11개
+
+        const v = [];
+        v.push(new Edge(1, 7, 12));
+        v.push(new Edge(1, 4, 28));
+        v.push(new Edge(1, 2, 67));
+        v.push(new Edge(1, 5, 17));
+        v.push(new Edge(2, 4, 24));
+        v.push(new Edge(2, 5, 62));
+        v.push(new Edge(3, 5, 20));
+        v.push(new Edge(3, 6, 37));
+        v.push(new Edge(4, 7, 13));
+        v.push(new Edge(5, 6, 45));
+        v.push(new Edge(5, 7, 73));
+
+        //간선의 비용으로 오름차순 정렬
+        v.sort(Edge.compare);
+        console.log(v);
+
+        //각 정점이 포함된 그래프가 어디인지 저장
+        let parent = [];
+        for(let i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+        console.log(parent);
+
+        //거리의 합을 0으로 초기화
+        let sum = 0;
+        for(let i = 0; i < v.length; i++) {
+            //동일한 부모를 가르키지 않는 경우, 즉 사이클이 발생하지 않을 때만 선택
+            if(!find(parent, v[i].node[0] - 1, v[i].node[1] - 1)) {
+                sum += v[i].distance;
+                unionParent(parent, v[i].node[0] - 1, v[i].node[1] - 1);
+
+                console.log('parent: ', parent);
+            }
+        }
+
+        console.log('sum: ', sum);
+
+    </script>
+
+    
+</body>
+</html>

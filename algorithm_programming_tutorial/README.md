@@ -25,6 +25,7 @@ https://www.youtube.com/watch?v=qQ5iLNjpxSk&list=PLRx0vPvlEmdDHxCvAQS1_6XV4deOwf
 - 이분 매칭 Bipartite Matching : https://blog.naver.com/ndb796/221240613074
 - KMP(Knuth-Morris-Pratt) : https://blog.naver.com/ndb796/221240660061
 - 라빈 카프(Rabin-Karp): https://blog.naver.com/ndb796/221240679247
+- 그리디(Greedy): https://blog.naver.com/ndb796/221242106787
 
 **check**
 - Union-Find(합집합 찾기): https://blog.naver.com/ndb796/221230967614
